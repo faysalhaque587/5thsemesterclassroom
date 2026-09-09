@@ -1,4 +1,4 @@
-# ৫ম ক্লাসরুম (CSE 5th Semester) 🎓
+# 5th Semester (CSE) 🎓
 
 ৫ম শ্রেণির **স্টাডি ম্যাটেরিয়াল শেয়ারিং অ্যাপ** — শিক্ষক ছবি ও PDF আপলোড করবেন, ছাত্ররা লগইন ছাড়াই সব দেখতে পারবে।
 
@@ -42,7 +42,7 @@
 ## 📱 APK বানাতে চাইলে (ঐচ্ছিক)
 আগের মেস অ্যাপের মতোই Capacitor দিয়ে বানানো যায়:
 1. `apk-build` ফোল্ডারের কপি বানান
-2. `capacitor.config.json`-এ বদলান: `"appId": "com.fahim.class5"`, `"appName": "৫ম ক্লাসরুম"`
+2. `capacitor.config.json`-এ বদলান: `"appId": "com.fahim.class5"`, `"appName": "5th Semester"`
 3. এই ফোল্ডারের সব ফাইল `www` ফোল্ডারে কপি করুন
 4. তারপর আগের মতোই: `npx cap sync` → Android Studio-তে খুলে Build APK
 

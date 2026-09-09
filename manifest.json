@@ -1,6 +1,6 @@
 {
-  "name": "৫ম ক্লাসরুম | CSE 5th Semester",
-  "short_name": "৫ম ক্লাসরুম",
+  "name": "5th Semester",
+  "short_name": "5th Semester",
   "description": "CSE 5th সেমিস্টারের স্টাডি ম্যাটেরিয়াল — ছবি ও PDF সবার জন্য এক জায়গায়",
   "lang": "bn",
   "start_url": "./",
@@ -11,13 +11,13 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "cse-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "cse-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

@@ -1,4 +1,4 @@
-/* ৫ম ক্লাসরুম — Service Worker (অফলাইন সাপোর্ট) */
+/* 5th Semester (CSE) — Service Worker (অফলাইন সাপোর্ট) */
 const CACHE_NAME = 'class5-cache-v4';
 const CORE_ASSETS = [
   './',
@@ -6,8 +6,8 @@ const CORE_ASSETS = [
   './styles.css',
   './app.js',
   './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+  './cse-icon-192.png',
+  './cse-icon-512.png'
 ];
 
 self.addEventListener('install', event => {
