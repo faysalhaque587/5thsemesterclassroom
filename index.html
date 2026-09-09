@@ -142,6 +142,25 @@
     <div id="lb-caption" class="lb-caption"></div>
   </div>
 
+  <div id="share-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close="share-modal"></div>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>📣 গ্রুপে নোটিশ দিন</h3>
+        <button class="icon-btn" data-close="share-modal" aria-label="বন্ধ">✕</button>
+      </div>
+      <p class="login-note">আপলোড সফল! নিচের মেসেজটা <strong>WhatsApp/Facebook-এ পাঠিয়ে দিন</strong> — ক্লাস গ্রুপে একবার পাঠালেই সবার ফোনে নোটিফিকেশন পৌঁছে যাবে। অনুষ্ঠানে ওদের অ্যাপ খোলারও প্রয়োজন নেই!</p>
+      <label class="field">নোটিশ মেসেজ
+        <textarea id="share-text" rows="4"></textarea>
+      </label>
+      <div class="share-actions">
+        <a id="share-wa" class="primary-button" href="#" target="_blank" rel="noopener">📲 WhatsApp-এ পাঠান</a>
+        <button id="share-copy" class="secondary-button">📋 কপি করুন</button>
+        <a id="share-fb" class="secondary-button" href="#" target="_blank" rel="noopener">📘 Facebook-এ Share</a>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="toast" role="status"></div>
 
   <footer class="footer">

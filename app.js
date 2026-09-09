@@ -13,6 +13,7 @@ const CREATOR_FB   = 'https://www.facebook.com/share/1YkNXjq9Qw/';  // 👤 App 
 const TABLE        = 'classroom_posts';   // ডাটাবেস টেবিল
 const BUCKET       = 'classroom-files';   // স্টোরেজ বাকেট
 const MAX_MB       = 200;                 // প্রতি ফাইলের সর্বোচ্চ সাইজ (MB)
+const SITE_URL     = 'https://faysalhaque587.github.io/5thsemesterclassroom';  // 🌐 লাইভ লিংক — নোটিশ মেসেজে যাবে
 
 const DEFAULT_SUBJECTS = [
   'Peripheral and Interfacing',
@@ -497,6 +498,37 @@ document.addEventListener('keydown', e => {
   }
 });
 
+/* ---------- গ্রুপে নোটিশ পাঠানো ---------- */
+const siteLink = () => {
+  const s = SITE_URL.trim();
+  return s || (location.origin + location.pathname).replace(/\/$/, '');
+};
+const siteName = '5th Semester';
+
+function openShareModal(post) {
+  const text =
+`📣 ${siteName} — নতুন ম্যাটেরিয়াল!
+📚 বিষয়: ${post.subject}
+📄 ${post.title}
+👁️ এখনই দেখুন: ${siteLink()}`;
+  $('share-text').value = text;
+  $('share-wa').href = 'https://wa.me/?text=' + encodeURIComponent(text);
+  $('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(siteLink())
+    + '&quote=' + encodeURIComponent(`📣 ${post.subject} — ${post.title}`);
+  openModal('share-modal');
+}
+
+$('share-copy').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText($('share-text').value);
+    toast('📋 মেসেজ কপি হয়েছে — গ্রুপে পেস্ট করে পাঠান', 'ok');
+  } catch (e) {
+    $('share-text').select();
+    document.execCommand('copy');
+    toast('📋 মেসেজ কপি হয়েছে (Ctrl+V দিয়ে পেস্ট করুন)', 'ok');
+  }
+});
+
 /* ---------- আপলোড ---------- */
 async function compressImage(file) {
   try {
@@ -625,6 +657,7 @@ async function doUpload(data) {
     closeModal('upload-modal');
     toast('✅ আপলোড সফল! সবাই এখনই দেখতে পাবে', 'ok');
     await loadPosts(true);
+    openShareModal({ subject: data.subject, title: data.title });
   } catch (e) {
     console.error(e);
     toast('আপলোড ব্যর্থ — ' + (e.message || ''), 'err');
