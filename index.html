@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>৫ম ক্লাসরুম | CSE 5th Semester</title>
+  <meta name="theme-color" content="#4f46e5" />
+  <meta name="description" content="৫ম শ্রেণির স্টাডি ম্যাটেরিয়াল — ছবি ও PDF সবার জন্য এক জায়গায়" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="৫ম ক্লাসরুম" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">৫ম</div>
+      <div class="brand-text">
+        <strong>৫ম ক্লাসরুম</strong>
+        <span>CSE 5th Semester · স্টাডি ম্যাটেরিয়াল</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button id="refresh-btn" class="icon-btn" title="রিফ্রেশ করুন" aria-label="রিফ্রেশ">⟳</button>
+      <button id="teacher-btn" class="teacher-btn" title="App Creator">👑 Fahim</button>
+      <button id="logout-btn" class="teacher-btn out hidden">লগআউট</button>
+    </div>
+  </header>
+
+  <div id="setup-warning" class="setup-warning hidden">
+    ⚠️ ডাটাবেস সেটআপ হয়নি। <strong>classroom-schema.sql</strong> ফাইলের কোডটি Supabase → SQL Editor-এ চালান (README.md দেখুন)।
+  </div>
+
+  <section class="hero">
+    <h1>📚 পড়ার সব ম্যাটেরিয়াল এক জায়গায়</h1>
+    <p>ছবি ও PDF নোট, লেকচার শিট — সবাই যেকোনো সময় দেখতে পারবে।</p>
+  </section>
+
+  <section class="filters">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="search" type="search" placeholder="খুঁজুন: শিরোনাম বা বিষয়…" />
+    </div>
+    <div id="chips" class="chips"></div>
+  </section>
+
+  <main id="feed" class="feed" aria-live="polite"></main>
+
+  <div id="loading" class="state-box">
+    <div class="spinner"></div>
+    <p>লোড হচ্ছে…</p>
+  </div>
+
+  <div id="empty" class="state-box hidden">
+    <div class="empty-emoji">🗂️</div>
+    <h2>এখনো কোনো ম্যাটেরিয়াল নেই</h2>
+    <p>Fahim আপলোড করলে এখানে দেখা যাবে।</p>
+  </div>
+
+  <div id="no-result" class="state-box hidden">
+    <div class="empty-emoji">🔎</div>
+    <h2>কিছু পাওয়া যায়নি</h2>
+    <p>অন্য কিছু লিখে খুঁজে দেখুন।</p>
+  </div>
+
+  <button id="fab" class="fab hidden" title="নতুন আপলোড" aria-label="নতুন আপলোড">＋</button>
+
+  <div id="login-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close="login-modal"></div>
+    <div class="modal-card small">
+      <div class="modal-head">
+        <h3>🔐 App Creator লগইন</h3>
+        <button class="icon-btn" data-close="login-modal" aria-label="বন্ধ">✕</button>
+      </div>
+      <form id="login-form">
+        <p class="login-note">শুধু অ্যাপ নির্মাতা <strong>Faysal Haque Fahim</strong> আপলোড ও ম্যানেজ করতে পারবেন। ছাত্ররা লগইন ছাড়াই সব দেখতে পারে।</p>
+        <label class="field">PIN কোড
+          <input id="pin-input" type="password" inputmode="numeric" autocomplete="off" maxlength="8" required placeholder="PIN লিখুন" />
+        </label>
+        <p id="login-error" class="error-msg hidden">❌ ভুল PIN! আবার চেষ্টা করুন।</p>
+        <button class="primary-button wide" type="submit">প্রবেশ করুন →</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="upload-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close="upload-modal"></div>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>📤 নতুন ম্যাটেরিয়াল</h3>
+        <button class="icon-btn" data-close="upload-modal" aria-label="বন্ধ">✕</button>
+      </div>
+      <form id="upload-form">
+        <label class="field">বিষয় <em>*</em>
+          <select id="up-subject" required></select>
+        </label>
+        <label class="field">শিরোনাম <em>*</em>
+          <input id="up-title" type="text" maxlength="120" required placeholder="যেমন: অধ্যায় ৩ — গুণিতক ও গুণনীয়ক" />
+        </label>
+        <label class="field">বর্ণনা (ঐচ্ছিক)
+          <textarea id="up-desc" rows="2" maxlength="600" placeholder="ছাত্রদের জন্য কিছু লিখুন…"></textarea>
+        </label>
+        <div class="file-pick">
+          <input id="up-files" type="file" multiple accept="image/*,application/pdf" hidden />
+          <button type="button" id="pick-btn" class="secondary-button">📎 ছবি / PDF বাছুন</button>
+          <span class="hint">একাধিক বাছা যাবে · প্রতিটি সর্বোচ্চ ২০০MB</span>
+        </div>
+        <div id="file-list" class="file-list"></div>
+        <p id="upload-progress" class="upload-progress hidden"></p>
+        <button type="submit" id="upload-submit" class="primary-button wide">⬆️ আপলোড করুন</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="pdf-modal" class="modal pdf-modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close="pdf-modal"></div>
+    <div class="pdf-card">
+      <div class="modal-head pdf-head">
+        <h3 id="pdf-title">PDF</h3>
+        <div class="pdf-tools">
+          <a id="pdf-open" class="icon-btn" href="#" target="_blank" rel="noopener" title="নতুন ট্যাবে খুলুন" aria-label="নতুন ট্যাবে খুলুন">↗</a>
+          <a id="pdf-download" class="icon-btn" href="#" download title="ডাউনলোড" aria-label="ডাউনলোড">⬇</a>
+          <button class="icon-btn" data-close="pdf-modal" aria-label="বন্ধ">✕</button>
+        </div>
+      </div>
+      <iframe id="pdf-frame" title="PDF ভিউয়ার"></iframe>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox hidden" aria-hidden="true">
+    <button id="lb-close" class="lb-btn lb-close" aria-label="বন্ধ">✕</button>
+    <button id="lb-prev" class="lb-btn lb-prev" aria-label="আগের ছবি">‹</button>
+    <img id="lb-img" alt="ছবি" />
+    <button id="lb-next" class="lb-btn lb-next" aria-label="পরের ছবি">›</button>
+    <div id="lb-caption" class="lb-caption"></div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <footer class="footer">
+    <span>© <span id="year"></span> ৫ম ক্লাসরুম · App Creator: <a id="creator-link" href="#" target="_blank" rel="noopener" class="creator-link" title="Facebook প্রোফাইল"><svg viewBox="0 0 24 24" fill="#1877F2" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047v-2.66c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.97H15.83c-1.491 0-1.956.93-1.956 1.886v2.264h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg> Faysal Haque Fahim</a> ❤️</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
