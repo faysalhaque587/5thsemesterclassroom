@@ -178,6 +178,11 @@ img { max-width: 100%; display: block; }
   padding: 7px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; transition: .15s;
 }
 .del-btn:hover { background: #fef2f2; }
+.views {
+  background: #eef2ff; color: var(--primary);
+  padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  white-space: nowrap;
+}
 
 /* ---------- অবস্থা বক্স (লোডিং/খালি) ---------- */
 .state-box { text-align: center; padding: 60px 20px; color: var(--muted); }

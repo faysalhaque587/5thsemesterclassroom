@@ -11,8 +11,12 @@ create table if not exists public.classroom_posts (
   subject     text not null,
   description text default '',
   files       jsonb not null default '[]'::jsonb,
+  views       bigint not null default 0,
   created_at  timestamptz not null default now()
 );
+
+-- পুরনো টেবিল থাকলে "views" কলাম যোগ হবে (যেন স্ক্রিপ্ট আবার চালালেও কাজ করে)
+alter table public.classroom_posts add column if not exists views bigint not null default 0;
 
 alter table public.classroom_posts enable row level security;
 
@@ -27,6 +31,18 @@ create policy "classroom_posts_insert" on public.classroom_posts
 drop policy if exists "classroom_posts_delete" on public.classroom_posts;
 create policy "classroom_posts_delete" on public.classroom_posts
   for delete using (true);
+
+-- ১.১) ভিউ কাউন্টার — কেউ ছবি/PDF খুললে views +১ হবে
+-- (security definer = RLS-এর বাইরে থেকে কাউন্ট বাড়ানো যাবে)
+create or replace function bump_classroom_views(p_id uuid)
+returns void
+language sql
+security definer
+as $$
+  update public.classroom_posts set views = views + 1 where id = p_id;
+$$;
+
+grant execute on function public.bump_classroom_views to anon, authenticated;
 
 -- ২) ছবি/PDF রাখার পাবলিক স্টোরেজ বাকেট
 insert into storage.buckets (id, name, public)

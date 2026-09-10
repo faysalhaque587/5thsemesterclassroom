@@ -36,6 +36,28 @@ let uploading = false;
 let lbImages = [];
 let lbIndex = 0;
 let firstLoadDone = false;
+let viewedPosts = new Set();
+try { viewedPosts = new Set(sessionStorage.getItem('c5-viewed') ? JSON.parse(sessionStorage.getItem('c5-viewed')) : []); } catch (e) { viewedPosts = new Set(); }
+
+/* ---------- ভিউ কাউন্টার ---------- */
+function noteViewed(postId) {
+  if (!sb || !postId || viewedPosts.has(postId)) return;   // এক সেশনে একবারই
+  viewedPosts.add(postId);
+  try { sessionStorage.setItem('c5-viewed', JSON.stringify([...viewedPosts])); } catch (e) { /* স্টোরেজ ভরা থাকলে সমস্যা নেই */ }
+  sb.rpc('bump_classroom_views', { p_id: postId })
+    .then(({ error }) => {
+      if (error) { console.error('ভিউ বাড়ানো যায়নি', error); return; }
+      const post = posts.find(p => p.id === postId);
+      if (post) { post.views = (post.views || 0) + 1; refreshViewBadge(postId, post.views); }
+    })
+    .catch(err => console.error('ভিউ বাড়ানো যায়নি', err));
+}
+
+function refreshViewBadge(postId, count) {
+  document.querySelectorAll(`[data-vid="${postId}"]`).forEach(el => {
+    el.textContent = '👁️ ' + toBn(count);
+  });
+}
 
 /* ---------- ছোট হেল্পার ---------- */
 const $ = id => document.getElementById(id);
@@ -186,6 +208,7 @@ function postCardHtml(p) {
     (p.description ? `<p class="post-desc">${escapeHtml(p.description)}</p>` : '') +
     `<div class="file-row">${chips}</div>` +
     `<div class="post-foot"><span class="time">📁 ${toBn(files.length)} টি ফাইল</span>` +
+    `<span class="views" data-vid="${p.id}" title="কতবার ফাইল খোলা হয়েছে">👁️ ${toBn(p.views || 0)}</span>` +
     (isAdmin ? `<button class="del-btn" data-del="${p.id}">🗑 মুছুন</button>` : '') +
     `</div></div></article>`;
 }
@@ -285,8 +308,10 @@ $('feed').addEventListener('click', e => {
   if (isImageFile(file)) {
     const images = files.filter(isImageFile).map(f => ({ url: fileUrl(f.path), name: f.name || 'ছবি' }));
     const at = images.findIndex(im => im.url === fileUrl(file.path));
+    noteViewed(post.id);
     openLightbox(images, Math.max(0, at));
   } else {
+    noteViewed(post.id);
     openPdf(file);
   }
 });
