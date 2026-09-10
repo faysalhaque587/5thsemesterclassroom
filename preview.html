@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌊 ডিপ-ওশান থিম প্রিভিউ</title>
+  <meta name="theme-color" content="#0b1026" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* শুধু প্রিভিউর জন্য — আসল অ্যাপে এগুলো নেই */
+    .preview-badge {
+      position: fixed; right: 16px; top: 70px; z-index: 60;
+      background: rgba(129, 140, 248, .2); border: 1px solid rgba(129, 140, 248, .5);
+      color: #e0e7ff; font-size: 12.5px; font-weight: 600;
+      padding: 8px 14px; border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(2, 6, 22, .5);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      pointer-events: none;
+    }
+    .post-cover {
+      background:
+        radial-gradient(120% 90% at 20% 15%, rgba(129, 140, 248, .55), transparent 60%),
+        radial-gradient(110% 90% at 85% 85%, rgba(14, 165, 233, .5), transparent 62%),
+        linear-gradient(135deg, #1c2450, #16224e) !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- ভাসমান গ্লো ব্লগ -->
+  <div class="bg" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+    <span class="blob b4"></span>
+  </div>
+
+  <span class="preview-badge">🎨 লাইভ প্রিভিউ — নতুন ডিপ-ওশান থিম</span>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">CSE</div>
+      <div class="brand-text">
+        <strong>5th Semester</strong>
+        <span>CSE · স্টাডি ম্যাটেরিয়াল</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" title="রিফ্রেশ করুন">⟳</button>
+      <button class="teacher-btn" title="App Creator">👑 Fahim</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>📚 পড়ার সব ম্যাটেরিয়াল এক জায়গায়</h1>
+    <p>ছবি ও PDF নোট, লেকচার শিট — সবাই যেকোনো সময় দেখতে পারবে।</p>
+  </section>
+
+  <section class="filters">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="search" type="search" placeholder="খুঁজুন: শিরোনাম বা বিষয়…" />
+    </div>
+    <div class="chips">
+      <button class="chip active">📚 সব</button>
+      <button class="chip">Peripheral and Interfacing</button>
+      <button class="chip">Operating System</button>
+      <button class="chip">Economics</button>
+    </div>
+  </section>
+
+  <main class="feed">
+    <article class="post-card">
+      <div class="post-cover">
+        <div class="cover-placeholder">🖼️</div>
+        <span class="cover-count">🖼️ +৬</span>
+      </div>
+      <div class="post-body">
+        <div class="post-meta"><span class="badge">Peripheral and Interfacing</span><span class="time">৩ দিন আগে</span></div>
+        <h3>Daisy MIB — চ্যাপ্টার ১–৭ (গ্লাস কার্ড!)</h3>
+        <p class="post-desc">মিডটার্মের গুরুত্বপূর্ণ চাপ্টারগুলো একসাথে দিলাম।</p>
+        <div class="file-row">
+          <span class="file-pair"><span class="file-chip"><span>📄</span><span class="fname">Peripheral (Ch 1-7).pdf</span></span></span>
+          <span class="file-pair"><span class="file-chip"><span>🖼️</span><span class="fname">নোট-০১.jpg</span></span></span>
+        </div>
+        <div class="post-foot">
+          <span class="time">📁 ৭ টি ফাইল</span>
+          <span class="views">👁️ ১২</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="post-card">
+      <div class="post-cover">
+        <div class="cover-placeholder">📗</div>
+      </div>
+      <div class="post-body">
+        <div class="post-meta"><span class="badge">Economics</span><span class="time">গতকাল</span></div>
+        <h3>অধ্যায় ১–৩ প্রশ্নব্যাংক</h3>
+        <div class="file-row">
+          <span class="file-pair"><span class="file-chip"><span>🖼️</span><span class="fname">Question-01.jpeg</span></span></span>
+        </div>
+        <div class="post-foot">
+          <span class="time">📁 ২ টি ফাইল</span>
+          <span class="views">👁️ ৫</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="post-card">
+      <div class="post-cover">
+        <div class="cover-placeholder">📘</div>
+      </div>
+      <div class="post-body">
+        <div class="post-meta"><span class="badge">Operating System</span><span class="time">৫ ঘণ্টা আগে</span></div>
+        <h3>Process Scheduling — লেকচার শিট</h3>
+        <p class="post-desc">FCFS, SJF, Round Robin তুলনামূলক টেবিলসহ।</p>
+        <div class="file-row">
+          <span class="file-pair"><span class="file-chip"><span>🖼️</span><span class="fname">Scheduling.jpg</span></span></span>
+        </div>
+        <div class="post-foot">
+          <span class="time">📁 ১ টি ফাইল</span>
+          <span class="views">👁️ ২১</span>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <button class="fab" title="নতুন আপলোড">＋</button>
+
+  <footer class="footer">
+    <span>© ২০২৬ 5th Semester · App Creator: <a href="#" class="creator-link">Faysal Haque Fahim</a> ❤️</span>
+  </footer>
+</body>
+</html>
